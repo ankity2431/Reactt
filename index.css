@@ -1,0 +1,41 @@
+.header img{
+    width: 70px;
+}
+
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.items-list > ul{
+    display: Flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.items-list > ul > li{
+   list-style: none;
+   font-size: 20px;
+}
+
+.items-list > ul > li> img{
+    width: 30px;
+}
+
+.cards{
+    width: 10rem;
+    padding: 5px;
+    border: 1px solid black;
+    background-color: #f0f0f0;
+    margin: 10px;
+}
+
+.cards > img{
+    width: 99%;
+}
+
+.res-cards{
+    display: flex;
+    flex-wrap: wrap;
+}

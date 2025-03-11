@@ -1,0 +1,22 @@
+{
+  "name": "reacttoutrial",
+  "version": "1.0.0",
+  "description": "This is Nameste React",
+  "license": "ISC",
+  "author": "Ankit Yadav",
+  "type": "commonjs",
+  "main": "sandbox.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "build index.html",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "parcel": "^2.13.3"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
+ 
