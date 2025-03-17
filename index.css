@@ -39,3 +39,24 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+.topRestro-btn{
+    margin-left: 10px;
+}
+
+.shimmer-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.shimmer-card{
+    margin: 20px;
+    width: 200px;
+    height: 400px;
+    background-color: rgb(212, 207, 207);
+}
+
+.card{
+    padding: 10px;
+    border: 1px solid black;
+}
