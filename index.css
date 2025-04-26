@@ -60,3 +60,17 @@
     padding: 10px;
     border: 1px solid black;
 }
+
+.restroDetailTitle{
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.acodemia{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin: auto;
+    border: 1px solid black;
+    padding: 10px;
+}

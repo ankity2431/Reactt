@@ -1,45 +1,55 @@
-import {useParams} from "react-router"
-import {useEffect, useState} from "react"
-import {MENU_LIST} from "../utils/constant"
-const RestaurantMenu = ()=>{
+import { useParams } from "react-router";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantMenuTitle from "./RestaurantMenuTitle";
 
-const [menuList, setmenuList] = useState({})
-const {resId} = useParams()
-    
-    useEffect(()=>{
-        fetchMenu()
-    }, [])
+const RestaurantMenu = () => {
+  const { resId } = useParams();
+  const menuList = useRestaurantMenu(resId);
 
-    const fetchMenu = async ()=>{
-        const data = await fetch(MENU_LIST + resId)
-        const json = await data.json()
-        setmenuList(json)
-    }
+  if (!menuList) {
+    return <h1>Loading...</h1>; // Display a loading state
+  }
 
-     // Safe Destructuring
-     const info = menuList?.data?.cards?.[2]?.card?.card?.info || {};
-     const { name, avgRating, costForTwoMessage, cuisines = [] } = info;
- 
-     const menu = menuList?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[1]?.card?.card || {};
-     const { itemCards = [] } = menu;
+  // Safe Destructuring
+  const info = menuList?.data?.cards?.[2]?.card?.card?.info || {};
+  const { name, avgRating, costForTwoMessage, cuisines = [] } = info;
 
-// const {name, avgRating, costForTwoMessage, cuisines} = menuList?.data?.cards[2]?.card?.card?.info
-// const {itemCards} = menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
-console.log(menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card)
+  const menu =
+    menuList?.data?.cards?.[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[1]
+      ?.card?.card || {};
+  const { itemCards = [] } = menu;
+  console.log("itemCards", itemCards);
 
-    return (
-        <div className="MenuContainer">
-            <div className="restroDetail">
-            <h1> {name}</h1>
-            <h3>{cuisines.join(",")}</h3>
-            </div>
-            <div className="menuDetail">
-                <ul>
-                   {itemCards.map((item)=><li key={item.card.info.id}>{item.card.info.name}</li>)}
-                </ul>
-            </div>
-        </div>
-    )
-}
+  // const {name, avgRating, costForTwoMessage, cuisines} = menuList?.data?.cards[2]?.card?.card?.info
+  // const {itemCards} = menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card
+  console.log(
+    "menutitle",
+    menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards
+  );
+
+  const menuTitle =
+    menuList?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (item) => {
+        const type = item.card?.card?.["@type"];
+        return type === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory" || 
+               type === "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory";
+      }
+    );
+
+  console.log("menutitleeee", menuTitle);
+  return (
+    <div className="MenuContainer">
+      <div className="restroDetail">
+        <h1 className="restroDetailTitle"> {name}</h1>
+        <h3 className="restroDetailTitle">
+          {cuisines.join(",")} - {costForTwoMessage}
+        </h3>
+      </div>
+      <div className="menuDetail">
+       {menuTitle.map((c) =>(<RestaurantMenuTitle data={menuTitle} />)) }
+      </div>
+    </div>
+  );
+};
 
 export default RestaurantMenu;

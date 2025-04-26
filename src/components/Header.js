@@ -1,11 +1,13 @@
 import {LOGO_URL} from "../utils/constant";
 import {SHOPPING_CART_ICON} from "../utils/constant";   
 import {useState} from "react";
+import useOnlineStatus from "../utils/useOnlineStatus"
 import {Link} from "react-router"
 
 const Header = () => {
 
     const [btnName, setbtnName] = useState("Login")  
+    const onlineStatus = useOnlineStatus()
 
     return (
       <div className="header">
@@ -17,6 +19,7 @@ const Header = () => {
         </div>
         <div className="items-list">
           <ul>
+            <li>Online Status: {onlineStatus?"🟢":"🔴"}</li>
             <li><Link to="/">Home</Link></li>
             <li><Link to="/about">About Us</Link></li>
             <li><Link to="/contact">Contact Us</Link></li>

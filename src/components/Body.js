@@ -1,37 +1,20 @@
 import Shimmer from "./Shimmer";
 import Cards from "./Cards";
-import {useState} from "react"; 
-import {useEffect} from "react";
+import useRestaurantCards from "../utils/useRestaurantCards";
 import {Link} from "react-router"
+import { useState } from "react";
+
 
 const Body = () => {
-
-    const [ListOfRestaurants, setListOfRestaurants] = useState([]);
-    const [listForFilter, setListForFilter] = useState([]); 
     const [searchText, setSearchText] = useState("");
-    
-    useEffect(()=>{
-        fetchData()
-    }, [])
-    
-
-    const fetchData = async ()=>{
-        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
-        const json = await data.json()
-        console.log("json data" , json)
-        console.log("json data" , json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-        setListOfRestaurants(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-        setListForFilter(json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    }
-   
-
+    const [ListOfRestaurants, listForFilter, setListOfRestaurants] = useRestaurantCards()
     
 
     return ListOfRestaurants.length ===0 ? <Shimmer /> : (
       <div className="body">
         <div  className="search-items">
           <input type="text" value={searchText} onChange={(e)=>{
-            setSearchText(e.target.value)
+            setSearchText(e.target.value) 
           }}/>
           <button className="search-btn" onClick={()=>{
             const filterList = listForFilter.filter((restro)=>{
@@ -55,7 +38,7 @@ const Body = () => {
         
   
         { ListOfRestaurants.map((restaurant, index)=>(
-          <Link to={"/restaurant/" + restaurant.info.id}> <Cards resData={restaurant} key={restaurant.info.id} /></Link>
+          <Link to={"/restaurant/" + restaurant.info.id}  key={restaurant.info.id}> <Cards resData={restaurant} /></Link>
     ))}
         </div>
       </div>

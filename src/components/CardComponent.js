@@ -8,6 +8,12 @@ class ClassCard extends React.Component{
         count2: 0,
        }
     }
+
+   async componentDidMount(){
+    const data = await fetch("")
+    const json = await data.json
+    
+   }
 render(){
     const {name, location} = this.props
     return <div className="card">
